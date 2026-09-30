@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cocacola.mvc.domain.MemberDTO;
-import cocacola.mvc.mapper.MemberMapper;
+import cocacola.mvc.service.MemberService;
 
 @Controller
 @RequestMapping("/cocacola")
 public class FindIdController {
 
     @Autowired
-    private MemberMapper memberMapper;
+    private MemberService memberService;
 
     // 아이디 찾기 페이지 이동
     @GetMapping("/FindId")
@@ -27,13 +27,8 @@ public class FindIdController {
     @PostMapping("/FindId")
     public String findId(MemberDTO dto, Model model) {
 
-        // 입력 전화번호에서 하이픈 제거
-        if(dto.getPhone() != null) {
-            dto.setPhone(dto.getPhone().replace("-", ""));
-        }
-
-        // 전화번호로 회원 조회
-        MemberDTO member = memberMapper.findByPhone(dto);
+        // 전화번호로 회원 조회 (하이픈 제거는 Service에서 처리)
+        MemberDTO member = memberService.findMemberByPhone(dto);
 
         if (member == null) {
             model.addAttribute("msg", "등록된 전화번호가 없습니다.");

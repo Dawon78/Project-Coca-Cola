@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cocacola.mvc.domain.MemberDTO;
-import cocacola.mvc.mapper.MemberMapper;
+import cocacola.mvc.service.MemberService;
 
 @Controller
 @RequestMapping("/cocacola")
 public class PasswordController {
 
     @Autowired
-    private MemberMapper memberMapper;
+    private MemberService memberService;
 
     // 비밀번호 찾기 페이지 (GET)
     @GetMapping("/findPass")
@@ -27,7 +27,7 @@ public class PasswordController {
     @PostMapping("/findPass")
     public String findPassword(MemberDTO dto, Model model) {
 
-        MemberDTO member = memberMapper.findByIdAndEmail(dto);
+        MemberDTO member = memberService.findMemberByIdAndEmail(dto);
 
         if (member == null) {
             model.addAttribute("msg", "아이디 또는 이메일이 일치하지 않습니다.");
