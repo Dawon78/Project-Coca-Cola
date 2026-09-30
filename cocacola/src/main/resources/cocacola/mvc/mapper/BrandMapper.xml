@@ -7,9 +7,9 @@
 
   <!-- 브랜드 전체 목록 -->
   <select id="selectBrandList" resultType="cocacola.mvc.domain.BrandDTO">
-    SELECT b.brand_id as brandId,
-           b.brand_name as brandName,
-           b.brand_logo_url as brandLogoUrl,
+    SELECT b.brand_id,
+           b.brand_name,
+           b.brand_logo_url,
            NVL(LISTAGG(LOWER(c.brand_category_name), ',')
                WITHIN GROUP (ORDER BY c.brand_category_name), '') AS brandCategories
     FROM Brands b
@@ -21,45 +21,45 @@
 
   <!-- 브랜드 상세 정보 -->
   <select id="selectBrand" parameterType="int" resultType="cocacola.mvc.domain.BrandDTO">
-    SELECT brand_id as brandId,
-           brand_name as brandName,
-           brand_logo_url as brandLogoUrl,
-           brand_description as brandDescription,
-           brand_origin as brandOrigin,
-           brand_mainphoto_url as brandMainphotoUrl
+    SELECT brand_id,
+           brand_name,
+           brand_logo_url,
+           brand_description,
+           brand_origin,
+           brand_mainphoto_url
     FROM Brands
     WHERE brand_id = #{brandId}
   </select>
 
   <!-- 브랜드 영상 정보 -->
   <select id="selectBrandVideo" parameterType="int" resultType="cocacola.mvc.domain.BrandVideoDTO">
-    SELECT brand_id as brandId,
-           youtube_video_id as youtubeVideoId,
-           video_thumbnail_url as videoThumbnailUrl,
-           video_description as videoDescription
+    SELECT brand_id,
+           youtube_video_id,
+           video_thumbnail_url,
+           video_description
     FROM Brand_Video
     WHERE brand_id = #{brandId}
   </select>
 
   <!-- 브랜드별 제품 목록 -->
   <select id="selectProducts" parameterType="int" resultType="cocacola.mvc.domain.ProductDTO">
-    SELECT product_id as productId,
-           brand_id as brandId,
-           sub_brand_id as subBrandId,
-           product_name as productName,
-           product_volume as productVolume,
-           product_image_url as productImageUrl,
-           product_description as productDescription
+    SELECT product_id,
+           brand_id,
+           sub_brand_id,
+           product_name,
+           product_volume,
+           product_image_url,
+           product_description
     FROM Product
     WHERE brand_id = #{brandId}
   </select>
 
   <!-- 서브 브랜드 목록 -->
   <select id="selectSubBrands" parameterType="int" resultType="cocacola.mvc.domain.SubBrandDTO">
-    SELECT sub_brand_id as subBrandId,
-           brand_id as brandId,
-           sub_brand_name as subBrandName,
-           sub_brand_logo_url as subBrandLogoUrl
+    SELECT sub_brand_id,
+           brand_id,
+           sub_brand_name,
+           sub_brand_logo_url
     FROM SubBrand
     WHERE brand_id = #{brandId}
   </select>
